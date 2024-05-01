@@ -1,0 +1,127 @@
+Index.html
+
+<html>
+
+    <body>
+
+       search: <input type="text" id="t1">
+
+        <button onclick="fun()"> click
+
+        </button>
+
+        <table border="2" id="one"></table><br>
+
+    </body>
+
+</html>
+
+<script>
+
+    let obj;
+
+    function fun() {
+
+        obj=new XMLHttpRequest();
+
+        let t1=document.getElementById("t1").value;
+
+        obj.onreadystatechange=function() {
+
+            if(obj.readyState==4 && obj.status==200) {
+
+               let data=obj.responseXML;
+
+               let product= data.getElementsByTagName("product");
+
+               for(i=0;i<product.length;i++) {
+
+                   let name = data.getElementsByTagName("name")[i].childNodes[0].textContent;
+
+                   let price = data.getElementsByTagName("price")[i].childNodes[0].textContent;
+
+                   let description = data.getElementsByTagName("description")[i].childNodes[0].textContent;
+
+                   
+
+                   if(name.match(t1)) {
+
+                       document.getElementById("one").innerHTML +=
+
+                           "<tr><td>Name: " + name + "</td><td>Price: " + price + "</td><td>Description: " + description + "</td></tr>";
+
+                   }
+
+               } 
+
+            }
+
+        }
+
+        obj.open("GET","products.xml",true);
+
+        obj.send();       
+
+    }
+
+</script>
+
+Products.xml
+
+
+
+
+
+<root>
+
+    <product>
+
+        <name>pencil</name>
+
+        <price>10</price>
+
+        <description>apsara</description>
+
+    </product>
+
+    <product>
+
+        <name>teddy</name>
+
+        <price>100</price>
+
+        <description>soft blue color</description>
+
+    </product>
+
+    <product>
+
+        <name>mobile</name>
+
+        <price>10,000</price>
+
+        <description>hd camera quality</description>
+
+    </product>
+
+    <product>
+
+        <name>laptop</name>
+
+        <price>1,00,000</price>
+
+        <description>hd screen with soft access</description>
+
+    </product>
+
+    <product>
+
+        <name>keyboard</name>
+
+        <price>2000</price>
+
+        <description>high text keys</description>
+
+    </product>
+
+</root>
